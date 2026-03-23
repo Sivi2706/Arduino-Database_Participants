@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ESP32 Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <h1>ESP32 Firebase Dashboard</h1>
+
+  <!-- Shows Firebase connection status -->
+  <p class="status" id="___">Connecting...</p>
+
+  <!-- ========== SERVO CONTROL CARD ========== -->
+  <div class="___">
+
+    <h2>Servo Control</h2>
+
+    <!-- Shows current slider angle -->
+    <p>Angle: <span id="angleValue">90</span>°</p>
+
+    <!-- Slider used to control servo -->
+    <input id="angleSlider" type="___" min="0" max="___" value="90">
+
+    <!-- Shows the value currently stored in Firebase -->
+    <p>ESP32 angle: <span id="___">90</span>°</p>
+
+  </div>
+
+  <!-- ========== IR SENSOR CARD ========== -->
+  <div class="card">
+
+    <h2>___ Sensor</h2>
+
+    <!-- Shows if object detected -->
+    <p>Detected: <span id="___">--</span></p>
+
+    <!-- Shows raw sensor value -->
+    <p>Raw: <span id="irRaw">--</span></p>
+
+  </div>
+
+  <!-- ========== MESSAGE TERMINAL CARD ========== -->
+  <div class="card">
+
+    <h2>Messages</h2>
+
+    <!-- Message display area -->
+    <div id="___">No messages yet.</div>
+
+    <br>
+
+    <!-- Message input row -->
+    <div class="___">
+
+      <input id="msgInput" type="text" placeholder="Type a message">
+
+      <button id="___">Send</button>
+
+    </div>
+
+  </div>
+
+  <!-- Load JavaScript logic -->
+  <script type="___" src="app.js"></script>
+
+</body>
+</html>
