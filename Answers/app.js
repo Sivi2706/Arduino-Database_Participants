@@ -54,9 +54,10 @@ let lastEspMsg = "";
 
 
 /* ============================================
-   FUNCTION: DISPLAY MESSAGE
+PART 4   : Serial Display
 ============================================ */
 
+// FUNCTION: DISPLAY MESSAGE
 function addMessage(text, source) {
   if (messages.textContent === "No messages yet.") {
     messages.textContent = "";
@@ -66,10 +67,7 @@ function addMessage(text, source) {
 }
 
 
-/* ============================================
-   FUNCTION: SEND MESSAGE FROM WEB
-============================================ */
-
+// FUNCTION: SEND MESSAGE FROM WEB
 function sendWebMessage() {
   const text = msgInput.value.trim();
   if (!text) return;
