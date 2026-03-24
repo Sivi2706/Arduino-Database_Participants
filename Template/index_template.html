@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ESP32 Dashboard</title>
-  <link rel="_____" href="_____" />
+  <link rel="stylesheet" href="styles_Template.css" />
 </head>
 
 <body>
@@ -20,31 +20,30 @@
   </div>
 
   <!-- Shows Firebase connection status -->
-  <p class="status" id="___">Connecting...</p>
+  <p class="status" id="status">Connecting...</p>
 
   <!-- ========== SERVO CONTROL CARD ========== -->
-  <div class="___">
+  <div class="card">
 
     <h2>Servo Control</h2>
-
     <!-- Shows current slider angle -->
     <p>Angle: <span id="angleValue">90</span>°</p>
 
     <!-- Slider used to control servo -->
-    <input id="angleSlider" type="___" min="0" max="___" value="90">
+    <input id="angleSlider" type="range" min="0" max="180" value="90">
 
     <!-- Shows the value currently stored in Firebase -->
-    <p>ESP32 angle: <span id="___">90</span>°</p>
+    <p>ESP32 angle: <span id="servoAngle">90</span>°</p>
 
   </div>
 
   <!-- ========== IR SENSOR CARD ========== -->
   <div class="card">
 
-    <h2>___ Sensor</h2>
+    <h2>Sensor</h2>
 
     <!-- Shows if object detected -->
-    <p>Detected: <span id="___">--</span></p>
+    <p>Detected: <span id="irDetected">--</span></p>
 
     <!-- Shows raw sensor value -->
     <p>Raw: <span id="irRaw">--</span></p>
@@ -57,23 +56,22 @@
     <h2>Messages</h2>
 
     <!-- Message display area -->
-    <div id="___">No messages yet.</div>
+    <div id="messages">No messages yet.</div>
 
     <br>
 
     <!-- Message input row -->
-    <div class="___">
+    <div class="row">
 
       <input id="msgInput" type="text" placeholder="Type a message">
 
-      <button id="___">Send</button>
+      <button id="sendBtn">Send</button>
 
     </div>
-
   </div>
 
   <!-- Load JavaScript logic -->
-  <script type="module" src="___"></script>
+  <script type="module" src="app_Template.js"></script>
 
 </body>
 </html>

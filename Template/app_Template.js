@@ -6,7 +6,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/fireba
 import { getAuth, signInAnonymously, onAuthStateChanged }
 from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-import { getDatabase, ref, onValue, ___ }
+import { getDatabase, ref, onValue, set }
 from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
 
@@ -15,39 +15,40 @@ from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
    REPLACE WITH YOUR OWN PROJECT SETTINGS
 ============================================ */
 
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "___________",
-  authDomain: "___________.firebaseapp.com",
-  databaseURL: "https://___________.region.firebasedatabase.app",
-  projectId: "___________",
-  storageBucket: "___________.appspot.com",
-  messagingSenderId: "___________",
-  appId: "___________"
+  apiKey: "AIzaSyBlxLdiakI8Zv5gtRWtAcfwxTcW-XtGbTw",
+  authDomain: "sivi-arduino-database.firebaseapp.com",
+  databaseURL: "https://sivi-arduino-database-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "sivi-arduino-database",
+  storageBucket: "sivi-arduino-database.firebasestorage.app",
+  messagingSenderId: "854752663108",
+  appId: "1:854752663108:web:b80bad680b96bb63478e11",
+  measurementId: "G-C1XE1J4ZJR"
 };
-
 
 /* ============================================
    INITIALIZE FIREBASE
 ============================================ */
 
-const app = initializeApp(___);
-const auth = getAuth(___);
-const db = getDatabase(___);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
 
 
 /* ============================================
    PART 3: GET HTML ELEMENTS
 ============================================ */
 
-const statusEl    = document.getElementById("___");
-const angleSlider = document.getElementById("___");
-const angleValue  = document.getElementById("___");
-const servoAngle  = document.getElementById("___");
-const irDetected  = document.getElementById("___");
-const irRaw       = document.getElementById("___");
-const messages    = document.getElementById("___");
-const msgInput    = document.getElementById("___");
-const sendBtn     = document.getElementById("___");
+const statusEl    = document.getElementById("status");
+const angleSlider = document.getElementById("angleSlider");
+const angleValue  = document.getElementById("angleValue");
+const servoAngle  = document.getElementById("servoAngle");
+const irDetected  = document.getElementById("irDetected");
+const irRaw       = document.getElementById("irRaw");
+const messages    = document.getElementById("messages");
+const msgInput    = document.getElementById("msgInput");
+const sendBtn     = document.getElementById("sendBtn");
 
 let lastEspMsg = "";
 
@@ -60,7 +61,7 @@ function addMessage(text, source) {
   if (messages.textContent === "No messages yet.") {
     messages.textContent = "";
   }
-  messages.textContent += `[${___}] ${text}\n`;
+  messages.textContent += `[${source}] ${text}\n`;
   messages.scrollTop = messages.scrollHeight;
 }
 
@@ -70,13 +71,13 @@ function addMessage(text, source) {
 ============================================ */
 
 function sendWebMessage() {
-  const text = msgInput.value.___();
-  if (___text) return;
+  const text = msgInput.value.trim();
+  if (!text) return;
   addMessage(text, "Web");
   msgInput.value = "";
   set(ref(db, "serial/message"), {
-    text: ___,
-    source: ___
+    text: text,
+    source: "web"
   });
 }
 
@@ -86,10 +87,10 @@ function sendWebMessage() {
    Path: "servo/msgTitle"
 ============================================ */
 
-angleSlider.addEventListener("___", () => {
+angleSlider.addEventListener("input", () => {
   const angle = Number(angleSlider.value);
-  angleValue.textContent = ___;
-  set(ref(db, "___/msgTitle"), angle);
+  angleValue.textContent = angle;
+  set(ref(db, "servo/msgTitle"), angle);
 });
 
 
@@ -97,9 +98,9 @@ angleSlider.addEventListener("___", () => {
    BUTTON EVENTS
 ============================================ */
 
-sendBtn.addEventListener("click", ___________);
-msgInput.addEventListener("___", (e) => {
-  if (e.key === "___") {
+sendBtn.addEventListener("click", sendWebMessage);
+msgInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
     sendWebMessage();
   }
 });
@@ -128,28 +129,28 @@ onAuthStateChanged(auth, (user) => {
 
   /* ----- SERVO LISTENER ----- */
   onValue(ref(db, "servo/msgTitle"), (snap) => {
-    const val = snap.___();
-    if (val === ___) return;
-    angleSlider.value = ___;
-    angleValue.textContent = ___;
-    servoAngle.textContent = ___;
+    const val = snap.val();
+    if (val === null) return;
+    angleSlider.value = val;
+    angleValue.textContent = val;
+    servoAngle.textContent = val;
   });
 
   /* ----- IR SENSOR LISTENER ----- */
   onValue(ref(db, "sensor/obstacle"), (snap) => {
     const val = snap.val();
     if (val === null) return;
-    irRaw.textContent = ___;
-    irDetected.textContent = val === 0 ? "___" : "___";
+    irRaw.textContent = val;
+    irDetected.textContent = val === 0 ? "YES" : "NO";
   });
 
   /* ----- MESSAGE LISTENER ----- */
   onValue(ref(db, "serial/message"), (snap) => {
     const data = snap.val();
     if (!data || !data.text) return;
-    if (data.source === "___" && data.text !== lastEspMsg) {
+    if (data.source === "esp32" && data.text !== lastEspMsg) {
       lastEspMsg = data.text;
-      addMessage(data.text, "___");
+      addMessage(data.text, "ESP32");
     }
   });
 });
