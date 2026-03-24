@@ -1,19 +1,19 @@
 /* ========== GLOBAL STYLES ========== */
 body {
   font-family: Arial, sans-serif;
-  max-width: ___px;
-  margin: 30px ___;
+  max-width: 700px;
+  margin: 30px auto;
   padding: 20px;
-  background: #___;
+  background: #f4f4f4;
   color: #222;
 }
 
 /* ========== CARD STYLES ========== */
 .card {
   background: #fff;
-  border: 1px solid #___;
-  border-radius: ___px;
-  padding: ___px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 18px;
   margin-bottom: 18px;
 }
 
@@ -22,36 +22,36 @@ h1, h2 {
 }
 
 .status {
-  font-weight: ___;
+  font-weight: bold;
 }
 
 /* ========== FORM ELEMENTS ========== */
-input[type="___"] {
+input[type="range"] {
   width: 100%;
 }
 
 /* ========== MESSAGE TERMINAL ========== */
 #messages {
-  height: ___px;
-  overflow-y: ___;
+  height: 180px;
+  overflow-y: auto;
   border: 1px solid #ccc;
   padding: 10px;
   background: #fafafa;
-  white-space: ___;
+  white-space: pre-wrap;
 }
 
 /* ========== ROW LAYOUT (FLEXBOX) ========== */
 .row {
-  display: ___;
-  gap: ___px;
+  display: flex;
+  gap: 10px;
 }
 
 input[type="text"] {
-  flex: ___;
+  flex: 1;
   padding: 8px;
 }
 
 button {
   padding: 8px 14px;
-  cursor: ___;
+  cursor: pointer;
 }
