@@ -154,3 +154,44 @@ onAuthStateChanged(auth, (user) => {
     }
   });
 });
+
+/* ============================================
+PART 7: Listen for Changes from Firebase
+============================================ */
+// LOGIN TO FIREBASE
+signInAnonymously(auth).catch(err => {
+console.error(err)
+statusEl.textContent = "Auth failed";
+});
+// AFTER LOGIN - ATTACH REAL-TIME LISTENERS
+onAuthStateChanged(auth, (user) => {
+if (!user) {
+statusEl.textContent = "Connecting...";
+return;
+}
+statusEl.textContent = "Connected";
+/* ----- SERVO LISTENER ----- */
+onValue(ref(db, "servo/msgTitle"), (snap) => {
+const val = snap.val();
+if (val === null) return;
+angleSlider.value = val;
+angleValue.textContent = val;
+servoAngle.textContent = val;
+});
+/* ----- IR SENSOR LISTENER ----- */
+onValue(ref(db, "sensor/obstacle"), (snap) => {
+const val = snap.val();
+if (val === null) return;
+irRaw.textContent = val;
+irDetected.textContent = val === 0 ? "YES" : "NO";
+});
+/* ----- MESSAGE LISTENER ----- */
+onValue(ref(db, "serial/message"), (snap) => {
+const data = snap.val();
+if (!data || !data.text) return;
+if (data.source === "esp32" && data.text !== lastEspMsg) {
+lastEspMsg = data.text;
+addMessage(data.text, "ESP32");
+}
+});
+});
